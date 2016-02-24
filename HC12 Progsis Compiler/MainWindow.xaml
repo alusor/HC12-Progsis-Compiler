@@ -8,8 +8,8 @@
         Title="HC12" Height="600" Width="700" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <StackPanel>
         <Label Content="Selecciona un archivo:"></Label>
-        <TextBox Text="archivo.c"></TextBox>
-        <Button Content="Seleccionar..."></Button>
+        <TextBox x:Name="name" Text="archivo.c"></TextBox>
+        <Button Content="Seleccionar..." Click="Button_Click"></Button>
         <Label Content="Codigo fuente"></Label>
         <TextBlock Text="lorem"></TextBlock>
         <Button Content="Compilar"></Button>
