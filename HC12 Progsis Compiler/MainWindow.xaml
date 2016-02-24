@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HC12_Progsis_Compiler"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="HC12" Height="600" Width="700" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <StackPanel>
+        <Label Content="Selecciona un archivo:"></Label>
+        <TextBox Text="archivo.c"></TextBox>
+        <Button Content="Seleccionar..."></Button>
+        <Label Content="Codigo fuente"></Label>
+        <TextBlock Text="lorem"></TextBlock>
+        <Button Content="Compilar"></Button>
+        <Label Content="Errores:"></Label>
+        <TextBlock Text="0"></TextBlock>
+        <Label Content="Codigo generado:"></Label>
+        <TextBlock></TextBlock>
+    </StackPanel>
 </Window>
