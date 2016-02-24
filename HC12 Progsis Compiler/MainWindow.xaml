@@ -6,16 +6,29 @@
         xmlns:local="clr-namespace:HC12_Progsis_Compiler"
         mc:Ignorable="d"
         Title="HC12" Height="600" Width="700" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <StackPanel>
-        <Label Content="Selecciona un archivo:"></Label>
-        <TextBox x:Name="name" Text="archivo.c"></TextBox>
-        <Button Content="Seleccionar..." Click="Button_Click"></Button>
-        <Label Content="Codigo fuente"></Label>
-        <TextBlock Text="lorem"></TextBlock>
-        <Button Content="Compilar"></Button>
-        <Label Content="Errores:"></Label>
-        <TextBlock Text="0"></TextBlock>
-        <Label Content="Codigo generado:"></Label>
-        <TextBlock></TextBlock>
-    </StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Label Content="Selecciona un archivo:" Grid.Row="0"></Label>
+        <TextBox x:Name="name" Text="archivo.c" Grid.Row="0" Grid.Column="1"></TextBox>
+        <Button Content="Seleccionar..." Grid.Row="0" Click="Button_Click" Grid.Column="2"></Button>
+        <Label Content="Codigo fuente" Grid.Row="1" Grid.Column="0"></Label>
+        <TextBlock Text="lorem" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"></TextBlock>
+        <Button Content="Compilar" Grid.Row="2" Grid.Column="3"></Button>
+        <Label Content="Errores:" Grid.Row="3" Grid.Column="0"></Label>
+        <TextBlock Text="0" Grid.Row="3" Grid.Column="1"></TextBlock>
+        <Label Content="Codigo generado:" Grid.Row="3" Grid.Column="2"></Label>
+        <TextBlock Grid.Row="3" Grid.Column="3"></TextBlock>
+    </Grid>
 </Window>
