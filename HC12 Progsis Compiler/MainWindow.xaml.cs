@@ -33,6 +33,11 @@ namespace HC12_Progsis_Compiler
             if (result == true) {
                 string filename = dlg.FileName;
                 name.Text = filename;
+                {
+                    string temp;
+                    System.IO.StreamReader archivo = new System.IO.StreamReader(filename);
+                    source.Text = archivo.ReadToEnd();
+                }
             }
         }
     }

@@ -24,7 +24,9 @@
         <TextBox x:Name="name" Text="archivo.c" Grid.Row="0" Grid.Column="1"></TextBox>
         <Button Content="Seleccionar..." Grid.Row="0" Click="Button_Click" Grid.Column="2"></Button>
         <Label Content="Codigo fuente" Grid.Row="1" Grid.Column="0"></Label>
-        <TextBlock Text="lorem" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"></TextBlock>
+        <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
+            <TextBlock x:Name="source" Text="lorem"  Width="auto" TextWrapping="Wrap" ></TextBlock>
+        </ScrollViewer>
         <Button Content="Compilar" Grid.Row="2" Grid.Column="3"></Button>
         <Label Content="Errores:" Grid.Row="3" Grid.Column="0"></Label>
         <TextBlock Text="0" Grid.Row="3" Grid.Column="1"></TextBlock>
