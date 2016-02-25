@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HC12_Progsis_Compiler"
         mc:Ignorable="d"
-        Title="HC12" Height="600" Width="700" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="HC12"  Height="600" Width="700" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -20,14 +20,14 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <Label Content="Selecciona un archivo:" Grid.Row="0"></Label>
-        <TextBox x:Name="name" Text="archivo.c" Grid.Row="0" Grid.Column="1"></TextBox>
-        <Button Content="Seleccionar..." Grid.Row="0" Click="Button_Click" Grid.Column="2"></Button>
+        <Label  Padding="10" Content="Selecciona un archivo:" Grid.Row="0"></Label>
+        <TextBox Padding="10" x:Name="name" Text="archivo.c" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" ></TextBox>
+        <Button Content="Seleccionar..." Grid.Row="0"  Click="Button_Click" Grid.Column="3"></Button>
         <Label Content="Codigo fuente" Grid.Row="1" Grid.Column="0"></Label>
         <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
-            <TextBlock x:Name="source" Text="lorem"  Width="auto" TextWrapping="Wrap" ></TextBlock>
+            <TextBlock Background="Black" Foreground="Green" Padding="5" x:Name="source" Text=""  Width="auto" TextWrapping="Wrap" ></TextBlock>
         </ScrollViewer>
-        <Button Content="Compilar" Grid.Row="2" Grid.Column="3"></Button>
+        <Button Height="35" Content="Compilar" Grid.Row="2" Grid.Column="3"></Button>
         <Label Content="Errores:" Grid.Row="3" Grid.Column="0"></Label>
         <TextBlock Text="0" Grid.Row="3" Grid.Column="1"></TextBlock>
         <Label Content="Codigo generado:" Grid.Row="3" Grid.Column="2"></Label>

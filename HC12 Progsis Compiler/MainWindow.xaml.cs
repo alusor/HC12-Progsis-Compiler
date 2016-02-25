@@ -31,12 +31,16 @@ namespace HC12_Progsis_Compiler
             dlg.DefaultExt = ".txt";
             Nullable<bool> result = dlg.ShowDialog();
             if (result == true) {
+                source.Text = "";
                 string filename = dlg.FileName;
                 name.Text = filename;
                 {
                     string temp;
                     System.IO.StreamReader archivo = new System.IO.StreamReader(filename);
-                    source.Text = archivo.ReadToEnd();
+                    while ((temp = archivo.ReadLine()) != null) {
+                        source.Text += temp + "\n";
+                    }
+                    //source.Text = archivo.ReadToEnd();
                 }
             }
         }
