@@ -27,7 +27,7 @@
         <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
             <TextBlock Background="Black" Foreground="Green" Padding="5" x:Name="source" Text=""  Width="auto" TextWrapping="Wrap" ></TextBlock>
         </ScrollViewer>
-        <Button Height="35" Content="Compilar" Grid.Row="2" Grid.Column="3"></Button>
+        <Button Height="35" Content="Compilar" Grid.Row="2" Grid.Column="3" Click="Button_Click_1"></Button>
         <Label Content="Errores:" Grid.Row="3" Grid.Column="0"></Label>
         <TextBlock Text="0" Grid.Row="3" Grid.Column="1"></TextBlock>
         <Label Content="Codigo generado:" Grid.Row="3" Grid.Column="2"></Label>

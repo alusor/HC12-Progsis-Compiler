@@ -44,5 +44,14 @@ namespace HC12_Progsis_Compiler
                 }
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            String[] lineas = source.Text.Split('\n');
+            Console.WriteLine(lineas.Length);
+            foreach (string line in lineas) {
+                Console.WriteLine(line + "3");
+            }
+        }
     }
 }
