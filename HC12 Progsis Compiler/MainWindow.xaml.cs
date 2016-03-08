@@ -20,9 +20,11 @@ namespace HC12_Progsis_Compiler
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Linea> lineas;
         public MainWindow()
         {
             InitializeComponent();
+            lineas = new List<Linea>();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -50,7 +52,7 @@ namespace HC12_Progsis_Compiler
             String[] lineas = source.Text.Split('\n');
             Console.WriteLine(lineas.Length);
             foreach (string line in lineas) {
-                String[] terminos = line.Split();
+                String[] terminos = line.Split('\t',' ');
                 for (int i = 0; i < terminos.Length; i++) {
                     mostrarErrores.Text+= terminos[i] + i + '*';
                 }
