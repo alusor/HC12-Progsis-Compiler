@@ -11,6 +11,7 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -28,9 +29,9 @@
             <TextBlock Background="Black" Foreground="Green" Padding="5" x:Name="source" Text=""  Width="auto" TextWrapping="Wrap" ></TextBlock>
         </ScrollViewer>
         <Button Height="35" Content="Compilar" Grid.Row="2" Grid.Column="3" Click="Button_Click_1"></Button>
-        <Label Content="Errores:" Grid.Row="3" Grid.Column="0"></Label>
-        <TextBlock Text="0" Grid.Row="3" Grid.Column="1"></TextBlock>
+        <Label Content="Errores:" x:Name="errores" Grid.Row="3" Grid.Column="0"></Label>
+        <TextBlock Text="0" Grid.Row="4" x:Name="mostrarErrores" Grid.Column="0" Grid.ColumnSpan="2"></TextBlock>
         <Label Content="Codigo generado:" Grid.Row="3" Grid.Column="2"></Label>
-        <TextBlock Grid.Row="3" Grid.Column="3"></TextBlock>
+        <TextBlock Grid.Row="4" x:Name="codigo" Grid.Column="2" Grid.ColumnSpan="2"></TextBlock>
     </Grid>
 </Window>

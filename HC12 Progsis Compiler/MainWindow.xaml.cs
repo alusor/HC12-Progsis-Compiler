@@ -50,7 +50,11 @@ namespace HC12_Progsis_Compiler
             String[] lineas = source.Text.Split('\n');
             Console.WriteLine(lineas.Length);
             foreach (string line in lineas) {
-                Console.WriteLine(line + "3");
+                String[] terminos = line.Split();
+                for (int i = 0; i < terminos.Length; i++) {
+                    mostrarErrores.Text+= terminos[i] + i + '*';
+                }
+               mostrarErrores.Text += '\n';
             }
         }
     }
