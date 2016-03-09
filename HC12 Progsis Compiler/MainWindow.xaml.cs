@@ -21,10 +21,12 @@ namespace HC12_Progsis_Compiler
     public partial class MainWindow : Window
     {
         List<Linea> lineas;
+        analizador ana;
         public MainWindow()
         {
             InitializeComponent();
             lineas = new List<Linea>();
+            ana = new analizador();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -49,15 +51,44 @@ namespace HC12_Progsis_Compiler
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            Linea aux;
             String[] lineas = source.Text.Split('\n');
-            Console.WriteLine(lineas.Length);
-            foreach (string line in lineas) {
-                String[] terminos = line.Split('\t',' ');
-                for (int i = 0; i < terminos.Length; i++) {
-                    mostrarErrores.Text+= terminos[i] + i + '*';
+            foreach (string linea in lineas) {
+                if (linea.Length > 0) {
+                    aux = ana.analizar(linea);
+                    this.lineas.Add(aux);
                 }
-               mostrarErrores.Text += '\n';
+                ana = new analizador();
             }
+            foreach (Linea i in this.lineas) {
+                if (i.comentario != null) {
+                    Console.WriteLine("Comentario");
+                }
+                if (i.etiqueta != null) {
+                    Console.WriteLine("Etiqueta:"+ i.etiqueta);
+                }
+                else
+                {
+                    Console.WriteLine("Etiqueta: null");
+                }
+                if (i.codop != null)
+                {
+                    Console.WriteLine("CODOP: " + i.codop);
+                }
+                else {
+                    Console.WriteLine("CODOP: null");
+                }
+                if (i.operando != null)
+                {
+                    Console.WriteLine("Operando: " + i.operando);
+                }
+                else {
+                    Console.WriteLine("Operando: null");
+                }
+                Console.WriteLine();
+            }
+            
+
         }
     }
 }

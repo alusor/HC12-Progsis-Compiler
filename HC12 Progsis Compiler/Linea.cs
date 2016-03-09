@@ -8,9 +8,9 @@ namespace HC12_Progsis_Compiler
 {
     class Linea
     {
-        String comentario { get; set; }
-        String etiqueta { get; set; }
-        String codop { get; set; }
-        String operando { get; set; }
+        public String comentario { get; set; }
+        public String etiqueta { get; set; }
+        public String codop { get; set; }
+        public String operando { get; set; }
     }
 }
