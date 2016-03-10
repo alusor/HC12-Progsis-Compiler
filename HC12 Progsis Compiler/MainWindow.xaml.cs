@@ -62,30 +62,45 @@ namespace HC12_Progsis_Compiler
             }
             foreach (Linea i in this.lineas) {
                 if (i.comentario != null) {
-                    Console.WriteLine("Comentario");
+                    salida.Text +=("Comentario"+'\n');
                 }
                 if (i.etiqueta != null) {
-                    Console.WriteLine("Etiqueta:"+ i.etiqueta);
+                    if (i.etiqueta != "error")
+                        if (i.etiqueta != "error1")
+                            salida.Text +=("Etiqueta:" + i.etiqueta + '\n');
+                        else {
+                            salida.Text +=("Error: Formato de etiqueta no valido." + '\n');
+                            //break;
+                        }
+                    else {
+                        salida.Text +=("Error: Excedido el tamaño de la etiqueta." + '\n');
+                        //break;
+                    }
+
                 }
                 else
                 {
-                    Console.WriteLine("Etiqueta: null");
+                    salida.Text +=("Etiqueta: null" + '\n');
                 }
                 if (i.codop != null)
                 {
-                    Console.WriteLine("CODOP: " + i.codop);
+                    if (i.codop == "error" || i.codop == "error1") {
+                        salida.Text +=("Error: Formato de CODOP no valido." + '\n');
+                        //break;
+                    }else
+                    salida.Text +=("CODOP: " + i.codop + '\n');
                 }
                 else {
-                    Console.WriteLine("CODOP: null");
+                    salida.Text +=("CODOP: null" + '\n');
                 }
                 if (i.operando != null)
                 {
-                    Console.WriteLine("Operando: " + i.operando);
+                    salida.Text +=("Operando: " + i.operando + '\n');
                 }
                 else {
-                    Console.WriteLine("Operando: null");
+                    salida.Text +=("Operando: null" + '\n');
                 }
-                Console.WriteLine();
+                salida.Text +=('\n');
             }
             
 

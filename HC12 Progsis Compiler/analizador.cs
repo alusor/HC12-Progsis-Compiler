@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Text.RegularExpressions;
 namespace HC12_Progsis_Compiler
 {
     class analizador
     {
         Linea linea;
+        Regex rex;
+        
         public analizador() {
             linea = new Linea();            
             
@@ -23,13 +25,50 @@ namespace HC12_Progsis_Compiler
         }
         private string etiqueta(string eti) {
             string aux = eti.Split()[0];
-            linea.etiqueta = aux;
+            if (aux.Length > 8)
+            {
+
+                linea.etiqueta = "error";
+            }
+            else {
+                rex = new Regex(@"^[A-Z,a-z][A-Z,a-z,0-9,_]*");
+                if (!rex.IsMatch(aux))
+                {
+                    linea.etiqueta = "error1";
+                }
+                else {
+                    linea.etiqueta = aux;
+                }
+            }
+            
             return aux;
 
         }
         private string codop(string cod) {
             string aux = cod.Trim().Split()[0];
-            linea.codop = aux;
+            if (aux.Length > 5)
+            {
+                linea.codop = "error";
+            }
+            else {
+                rex = new Regex(@"^[A-Z,a-z][A-Z,a-z,\.]");
+                if (!rex.IsMatch(aux))
+                {
+                    linea.codop = "error1";
+                }
+                else {
+                    int numPuntos = aux.ToArray().Where(ir => ir.Equals('.')).Count();
+                    if (numPuntos > 1) {
+                        linea.codop = "error1";
+                    }
+                    else
+                    {
+                        linea.codop = aux;
+                    }
+                }
+            }
+
+            //linea.codop = aux;
             //Console.WriteLine(aux);
             return aux;
         }
