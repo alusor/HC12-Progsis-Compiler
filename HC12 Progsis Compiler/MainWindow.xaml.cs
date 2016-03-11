@@ -107,7 +107,6 @@ namespace HC12_Progsis_Compiler
                 }
                 salida.Text +=('\n');
             }
-            Console.WriteLine(this.lineas.Last().codop);
             if ((this.lineas.Last().codop != "end")&& (this.lineas.Last().codop != "END") && (this.lineas.Last().codop != "End") && (this.lineas.Last().codop != "ENd") && (this.lineas.Last().codop != "eND") ) {
                 salida.Text += "No se encontro End";
             }
