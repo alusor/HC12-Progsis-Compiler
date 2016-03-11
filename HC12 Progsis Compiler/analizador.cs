@@ -68,7 +68,7 @@ namespace HC12_Progsis_Compiler
                 }
             }
 
-            //linea.codop = aux;
+            // linea.codop = aux;
             //Console.WriteLine(aux);
             return aux;
         }

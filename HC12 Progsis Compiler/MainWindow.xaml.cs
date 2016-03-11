@@ -22,6 +22,7 @@ namespace HC12_Progsis_Compiler
     {
         List<Linea> lineas;
         analizador ana;
+        bool a = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -53,13 +54,17 @@ namespace HC12_Progsis_Compiler
         {
             Linea aux;
             String[] lineas = source.Text.Split('\n');
+            salida.Text = "";
             foreach (string linea in lineas) {
                 if (linea.Length > 0) {
                     aux = ana.analizar(linea);
                     this.lineas.Add(aux);
+                    if (linea.Contains("END") || linea.Contains("end") || linea.Contains("enD") || linea.Contains("EnD") || linea.Contains("ENd") || linea.Contains("eNd")){
+                        a = true;
+                    }
                 }
                 ana = new analizador();
-            }
+            }       
             foreach (Linea i in this.lineas) {
                 if (i.comentario != null) {
                     salida.Text +=("Comentario"+'\n');
@@ -72,7 +77,7 @@ namespace HC12_Progsis_Compiler
                             salida.Text +=("Error: Formato de etiqueta no valido." + '\n');
                             //break;
                         }
-                    else {
+                    else {      
                         salida.Text +=("Error: Excedido el tamaño de la etiqueta." + '\n');
                         //break;
                     }
@@ -102,7 +107,10 @@ namespace HC12_Progsis_Compiler
                 }
                 salida.Text +=('\n');
             }
-            
+            Console.WriteLine(this.lineas.Last().codop);
+            if ((this.lineas.Last().codop != "end")&& (this.lineas.Last().codop != "END") && (this.lineas.Last().codop != "End") && (this.lineas.Last().codop != "ENd") && (this.lineas.Last().codop != "eND") ) {
+                salida.Text += "No se encontro End";
+            }
 
         }
     }
