@@ -20,6 +20,7 @@ namespace HC12_Progsis_Compiler
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Tabop> tabop;
         List<Linea> lineas;
         analizador ana;
         bool a = false;
@@ -27,8 +28,33 @@ namespace HC12_Progsis_Compiler
         {
             InitializeComponent();
             lineas = new List<Linea>();
+            tabop = new List<Tabop>();
             ana = new analizador();
+            cargarTabop();  
         }
+        public void cargarTabop() {
+            System.IO.StreamReader tabop = new System.IO.StreamReader("TABOP.txt");
+            String[] temp = tabop.ReadToEnd().Split('\n');
+            foreach (String Linea in temp) {
+                
+                String[] aux = Linea.Split('|');
+                Console.WriteLine(aux[6]);
+                Tabop tmp = new Tabop();
+                tmp.Codop = aux[0];
+                if (aux[1] != "NO")
+                {
+                    tmp.tieneOperando = true;
+                }
+                else tmp.tieneOperando = false;
+                tmp.mDireccionamiento = aux[2];
+                tmp.codigoMaquina = aux[3];
+                tmp.totalBytestCalculado = int.Parse(aux[4]);
+                //tmp.totalBytesPorCalcular = int.Parse(aux[5]);
+                //tmp.sumaTotalBytes = int.Parse(aux[6]);
+                this.tabop.Add(tmp); 
+            }
+        }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
