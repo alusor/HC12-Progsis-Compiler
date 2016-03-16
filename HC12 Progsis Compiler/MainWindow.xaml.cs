@@ -38,7 +38,6 @@ namespace HC12_Progsis_Compiler
             foreach (String Linea in temp) {
                 
                 String[] aux = Linea.Split('|');
-                Console.WriteLine(aux[6]);
                 Tabop tmp = new Tabop();
                 tmp.Codop = aux[0];
                 if (aux[1] != "NO")
@@ -49,10 +48,12 @@ namespace HC12_Progsis_Compiler
                 tmp.mDireccionamiento = aux[2];
                 tmp.codigoMaquina = aux[3];
                 tmp.totalBytestCalculado = int.Parse(aux[4]);
-                //tmp.totalBytesPorCalcular = int.Parse(aux[5]);
-                //tmp.sumaTotalBytes = int.Parse(aux[6]);
+                tmp.totalBytesPorCalcular = int.Parse(aux[5]);
+                tmp.sumaTotalBytes = int.Parse(aux[6]);
                 this.tabop.Add(tmp); 
             }
+            Console.WriteLine("Numero de lineas: " + temp.Length);
+            Console.WriteLine("Numero de tabobs en la lista: "+this.tabop.Count);
         }
 
 
