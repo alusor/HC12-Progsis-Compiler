@@ -52,11 +52,15 @@ namespace HC12_Progsis_Compiler
                 tmp.sumaTotalBytes = int.Parse(aux[6]);
                 this.tabop.Add(tmp); 
             }
-            Console.WriteLine("Numero de lineas: " + temp.Length);
-            Console.WriteLine("Numero de tabobs en la lista: "+this.tabop.Count);
         }
 
-
+        bool verificarCodop(string codop) {
+            for (int i = 0; i < tabop.Count; i++) {
+                if(codop.ToUpper()==tabop[i].Codop)
+                    Console.WriteLine(tabop[i].Codop);
+            }
+            return true;
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -116,11 +120,16 @@ namespace HC12_Progsis_Compiler
                 }
                 if (i.codop != null)
                 {
-                    if (i.codop == "error" || i.codop == "error1") {
-                        salida.Text +=("Error: Formato de CODOP no valido." + '\n');
+                    if (i.codop == "error" || i.codop == "error1")
+                    {
+                        salida.Text += ("Error: Formato de CODOP no valido." + '\n');
                         //break;
-                    }else
-                    salida.Text +=("CODOP: " + i.codop + '\n');
+                    }
+                    else {
+                        salida.Text += ("CODOP: " + i.codop + '\n');
+                        bool a = verificarCodop(i.codop);
+                    }
+
                 }
                 else {
                     salida.Text +=("CODOP: null" + '\n');
