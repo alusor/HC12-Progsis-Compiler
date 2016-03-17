@@ -54,12 +54,17 @@ namespace HC12_Progsis_Compiler
             }
         }
 
-        bool verificarCodop(string codop) {
+        string verificarCodop(string codop) {
+            string temp= "";
             for (int i = 0; i < tabop.Count; i++) {
-                if(codop.ToUpper()==tabop[i].Codop)
-                    Console.WriteLine(tabop[i].Codop);
+                if (codop.ToUpper() == tabop[i].Codop) {
+                    temp += tabop[i].Codop+ " " + tabop[i].tieneOperando+ " " + tabop[i].mDireccionamiento+ " " + tabop[i].totalBytestCalculado+ " " + tabop[i].totalBytesPorCalcular+" "+ tabop[i].sumaTotalBytes+"\n";
+                    
+                }
+                    
+
             }
-            return true;
+            return temp;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -127,7 +132,10 @@ namespace HC12_Progsis_Compiler
                     }
                     else {
                         salida.Text += ("CODOP: " + i.codop + '\n');
-                        bool a = verificarCodop(i.codop);
+                        string a = verificarCodop(i.codop);
+                        if (a != "") {
+                            salida.Text += a;
+                        }
                     }
 
                 }
