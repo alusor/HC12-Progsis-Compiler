@@ -1,0 +1,6 @@
+	ORG	$AB
+ET1	SWI     $AB
+	ADCA 1,X
+	ADCA 
+	BRA ET1	
+	END
