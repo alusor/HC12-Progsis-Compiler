@@ -54,17 +54,37 @@ namespace HC12_Progsis_Compiler
             }
         }
 
-        string verificarCodop(string codop) {
+        string verificarCodop(string codop, string operando) {
             string temp= "";
+            string aux = "";
             for (int i = 0; i < tabop.Count; i++) {
                 if (codop.ToUpper() == tabop[i].Codop) {
-                    temp += tabop[i].Codop+ " " + tabop[i].tieneOperando+ " " + tabop[i].mDireccionamiento+ " " + tabop[i].totalBytestCalculado+ " " + tabop[i].totalBytesPorCalcular+" "+ tabop[i].sumaTotalBytes+"\n";
+                    if (tabop[i].tieneOperando)
+                    {
+                        //Console.WriteLine("Necesita operando");
+                        if (operando == null) {
+                            aux = ("El CODOP DEBE TENER OPERANDO\n" );
+                        }
+
+
+                    }
+                    else {
+                        //Console.WriteLine("No necesita operando");
+                        if (operando != null)
+                        {
+                            aux =("EL CODOP NO DEBE TENER OPERANDO\n" );
+                        }
+                    }
+                    temp += tabop[i].Codop+ " " + tabop[i].tieneOperando+ " " + tabop[i].mDireccionamiento+ " "+tabop[i].codigoMaquina+"" + tabop[i].totalBytestCalculado+ " " + tabop[i].totalBytesPorCalcular+" "+ tabop[i].sumaTotalBytes+"\n";
                     
                 }
                     
 
             }
-            return temp;
+            if (temp == "") {
+                return "NO SE ENCONTRO EL CODOP DE OPERACION";
+            }
+            return temp + aux ;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -132,7 +152,7 @@ namespace HC12_Progsis_Compiler
                     }
                     else {
                         salida.Text += ("CODOP: " + i.codop + '\n');
-                        string a = verificarCodop(i.codop);
+                        string a = verificarCodop(i.codop, i.operando);
                         if (a != "") {
                             salida.Text += a;
                         }
