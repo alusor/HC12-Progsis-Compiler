@@ -27,9 +27,7 @@ namespace HC12_Progsis_Compiler
         public MainWindow()
         {
             InitializeComponent();
-            lineas = new List<Linea>();
             tabop = new List<Tabop>();
-            ana = new analizador();
             cargarTabop();  
         }
         public void cargarTabop() {
@@ -82,7 +80,7 @@ namespace HC12_Progsis_Compiler
 
             }
             if (temp == "") {
-                return "NO SE ENCONTRO EL CODOP DE OPERACION\n";
+                return "No se encuentra en el TABOP\n";
             }
             return temp + aux ;
         }
@@ -107,10 +105,14 @@ namespace HC12_Progsis_Compiler
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
-        {   
+        {
+            this.lineas = new List<Linea>();
+            
+            ana = new analizador();
+            salida.Text = "";
             Linea aux;
             String[] lineas = source.Text.Split('\n');
-            salida.Text = "";
+            
             foreach (string linea in lineas) {
                 if (linea.Length > 0) {
                     aux = ana.analizar(linea);
@@ -128,53 +130,57 @@ namespace HC12_Progsis_Compiler
                         {
                             salida.Text += ("Comentario" + '\n');
                         }
-                        if (i.etiqueta != null)
-                        {
-                            if (i.etiqueta != "error")
-                                if (i.etiqueta != "error1")
-                                    salida.Text += ("Etiqueta:" + i.etiqueta + '\n');
+                        else{
+                            if (i.etiqueta != null)
+                            {
+                                if (i.etiqueta != "error")
+                                    if (i.etiqueta != "error1")
+                                        salida.Text += ("Etiqueta:" + i.etiqueta + '\n');
+                                    else {
+                                        salida.Text += ("Error: Formato de etiqueta no valido." + '\n');
+                                        //break;
+                                    }
                                 else {
-                                    salida.Text += ("Error: Formato de etiqueta no valido." + '\n');
+                                    salida.Text += ("Error: Excedido el tamaño de la etiqueta." + '\n');
                                     //break;
                                 }
-                            else {
-                                salida.Text += ("Error: Excedido el tamaño de la etiqueta." + '\n');
-                                //break;
-                            }
 
-                        }
-                        else
-                        {
-                            salida.Text += ("Etiqueta: null" + '\n');
-                        }
-                        if (i.codop != null)
-                        {
-                            if (i.codop == "error" || i.codop == "error1")
+                            }
+                            else
                             {
-                                salida.Text += ("Error: Formato de CODOP no valido." + '\n');
-                                //break;
+                                salida.Text += ("Etiqueta: null" + '\n');
+                            }
+                            if (i.codop != null)
+                            {
+                                if (i.codop == "error" || i.codop == "error1")
+                                {
+                                    salida.Text += ("Error: Formato de CODOP no valido." + '\n');
+                                    //break;
+                                }
+                                else {
+                                    salida.Text += ("CODOP: " + i.codop + '\n');
+                                    string a = verificarCodop(i.codop, i.operando);
+                                    if (a != "")
+                                    {
+                                        salida.Text += a;
+                                    }
+                                }
+
                             }
                             else {
-                                salida.Text += ("CODOP: " + i.codop + '\n');
-                                string a = verificarCodop(i.codop, i.operando);
-                                if (a != "")
-                                {
-                                    salida.Text += a;
-                                }
+                                salida.Text += ("CODOP: null" + '\n');
                             }
+                            if (i.operando != null)
+                            {
+                                salida.Text += ("Operando: " + i.operando + '\n');
+                            }
+                            else {
+                                salida.Text += ("Operando: null" + '\n');
+                            }
+                            salida.Text += ('\n');
+                        }
 
-                        }
-                        else {
-                            salida.Text += ("CODOP: null" + '\n');
-                        }
-                        if (i.operando != null)
-                        {
-                            salida.Text += ("Operando: " + i.operando + '\n');
-                        }
-                        else {
-                            salida.Text += ("Operando: null" + '\n');
-                        }
-                        salida.Text += ('\n');
+                        
                     }
                 }
                 
