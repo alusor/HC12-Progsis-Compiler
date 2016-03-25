@@ -28,7 +28,7 @@
         
         <Button Height="35" Content="Compilar" Grid.Row="4" Grid.Column="0" Click="Button_Click_1"></Button>
         <TabControl x:Name="control" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="3">
-            <TabItem Header="Codigo Fuente">
+            <TabItem Header="Codigo Fuente" Foreground="blue">
                 <Grid>
                     <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
                         <TextBlock Background="Black" Foreground="Green" Padding="5" x:Name="source" Text=""  Width="auto" TextWrapping="Wrap" ></TextBlock>
@@ -43,7 +43,15 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Compilación">
-                
+                <Grid>
+                    <DataGrid AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="No. L" Width="50" IsReadOnly="True" CanUserResize="False">
+                                
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
         <!--<Label Content="Salida:" x:Name="errores" ></Label>

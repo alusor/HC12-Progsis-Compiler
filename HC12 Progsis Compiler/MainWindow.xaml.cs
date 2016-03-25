@@ -23,7 +23,7 @@ namespace HC12_Progsis_Compiler
         List<Tabop> tabop;
         List<Linea> lineas;
         analizador ana;
-        bool a = false;
+        //bool a = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -82,7 +82,7 @@ namespace HC12_Progsis_Compiler
 
             }
             if (temp == "") {
-                return "NO SE ENCONTRO EL CODOP DE OPERACION";
+                return "NO SE ENCONTRO EL CODOP DE OPERACION\n";
             }
             return temp + aux ;
         }
@@ -115,65 +115,77 @@ namespace HC12_Progsis_Compiler
                 if (linea.Length > 0) {
                     aux = ana.analizar(linea);
                     this.lineas.Add(aux);
-                    if (linea.Contains("END") || linea.Contains("end") || linea.Contains("enD") || linea.Contains("EnD") || linea.Contains("ENd") || linea.Contains("eNd")){
+                    /*if (linea.Contains("END") || linea.Contains("end") || linea.Contains("enD") || linea.Contains("EnD") || linea.Contains("ENd") || linea.Contains("eNd")){
                         a = true;
-                    }
+                    }*/
                 }
                 ana = new analizador();
             }       
             foreach (Linea i in this.lineas) {
-                if (i.comentario != null) {
-                    salida.Text +=("Comentario"+'\n');
-                }
-                if (i.etiqueta != null) {
-                    if (i.etiqueta != "error")
-                        if (i.etiqueta != "error1")
-                            salida.Text +=("Etiqueta:" + i.etiqueta + '\n');
+                if (i.codop != null) {
+                    if (i.codop.ToUpper() != "END") {
+                        if (i.comentario != null)
+                        {
+                            salida.Text += ("Comentario" + '\n');
+                        }
+                        if (i.etiqueta != null)
+                        {
+                            if (i.etiqueta != "error")
+                                if (i.etiqueta != "error1")
+                                    salida.Text += ("Etiqueta:" + i.etiqueta + '\n');
+                                else {
+                                    salida.Text += ("Error: Formato de etiqueta no valido." + '\n');
+                                    //break;
+                                }
+                            else {
+                                salida.Text += ("Error: Excedido el tamaño de la etiqueta." + '\n');
+                                //break;
+                            }
+
+                        }
+                        else
+                        {
+                            salida.Text += ("Etiqueta: null" + '\n');
+                        }
+                        if (i.codop != null)
+                        {
+                            if (i.codop == "error" || i.codop == "error1")
+                            {
+                                salida.Text += ("Error: Formato de CODOP no valido." + '\n');
+                                //break;
+                            }
+                            else {
+                                salida.Text += ("CODOP: " + i.codop + '\n');
+                                string a = verificarCodop(i.codop, i.operando);
+                                if (a != "")
+                                {
+                                    salida.Text += a;
+                                }
+                            }
+
+                        }
                         else {
-                            salida.Text +=("Error: Formato de etiqueta no valido." + '\n');
-                            //break;
+                            salida.Text += ("CODOP: null" + '\n');
                         }
-                    else {      
-                        salida.Text +=("Error: Excedido el tamaño de la etiqueta." + '\n');
-                        //break;
-                    }
-
-                }
-                else
-                {
-                    salida.Text +=("Etiqueta: null" + '\n');
-                }
-                if (i.codop != null)
-                {
-                    if (i.codop == "error" || i.codop == "error1")
-                    {
-                        salida.Text += ("Error: Formato de CODOP no valido." + '\n');
-                        //break;
-                    }
-                    else {
-                        salida.Text += ("CODOP: " + i.codop + '\n');
-                        string a = verificarCodop(i.codop, i.operando);
-                        if (a != "") {
-                            salida.Text += a;
+                        if (i.operando != null)
+                        {
+                            salida.Text += ("Operando: " + i.operando + '\n');
                         }
+                        else {
+                            salida.Text += ("Operando: null" + '\n');
+                        }
+                        salida.Text += ('\n');
                     }
-
                 }
-                else {
-                    salida.Text +=("CODOP: null" + '\n');
-                }
-                if (i.operando != null)
-                {
-                    salida.Text +=("Operando: " + i.operando + '\n');
-                }
-                else {
-                    salida.Text +=("Operando: null" + '\n');
-                }
-                salida.Text +=('\n');
+                
             }
-            if ((this.lineas.Last().codop != "end")&& (this.lineas.Last().codop != "END") && (this.lineas.Last().codop != "End") && (this.lineas.Last().codop != "ENd") && (this.lineas.Last().codop != "eND") ) {
+
+            if (this.lineas.Last().codop.ToUpper() != "END") {
                 salida.Text += "No se encontro End";
             }
+            /*if ((this.lineas.Last().codop != "end")&& (this.lineas.Last().codop != "END") && (this.lineas.Last().codop != "End") && (this.lineas.Last().codop != "ENd") && (this.lineas.Last().codop != "eND") ) {
+                salida.Text += "No se encontro End";
+            }*/
             control.SelectedIndex = 1;
 
         }
