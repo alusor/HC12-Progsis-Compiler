@@ -55,24 +55,50 @@ namespace HC12_Progsis_Compiler
         string verificarCodop(string codop, string operando) {
             string temp= "";
             string aux = "";
+            bool found =false;
             for (int i = 0; i < tabop.Count; i++) {
                 if (codop.ToUpper() == tabop[i].Codop) {
-                    if (tabop[i].tieneOperando)
-                    {
-                        //Console.WriteLine("Necesita operando");
-                        if (operando == null) {
-                            aux = ("El CODOP DEBE TENER OPERANDO\n" );
-                        }
-
-
-                    }
-                    else {
-                        //Console.WriteLine("No necesita operando");
-                        if (operando != null)
+                    if(!found)
+                        if (tabop[i].tieneOperando)
                         {
-                            aux =("EL CODOP NO DEBE TENER OPERANDO\n" );
+                            if (operando == null)
+                            {
+                                aux = ("El CODOP DEBE TENER OPERANDO\n");
+                            }
+                            else {
+                            
+                               found = analizarOperando(operando,tabop[i].mDireccionamiento);
+                                if (found) {
+                                    switch (tabop[i].mDireccionamiento) {
+                                        case "IMM":
+                                            aux = "Inmediato " + tabop[i].sumaTotalBytes.ToString() + " bytes + operando = " + operando + "\n";
+                                            break;
+                                        case "DIR":
+                                            aux = "Directo " + tabop[i].sumaTotalBytes.ToString() + " bytes+ operando = " + operando + "\n";
+                                            break;
+                                        case "EXT":
+                                            aux = "Extendido " + tabop[i].sumaTotalBytes.ToString() + " bytes+ operando = " + operando + "\n";
+                                            break;
+                                        case "REL":
+                                            aux = "Relativo " + tabop[i].sumaTotalBytes.ToString() + " bytes+ operando = " + operando + "\n";
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+
+
                         }
-                    }
+                        else {
+                            if (tabop[i].mDireccionamiento == "INH" && operando == null)
+                            {
+                                aux = "Inherente " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
+                            }else 
+                            {
+                                aux =("EL CODOP NO DEBE TENER OPERANDO\n" );
+                            }
+                        }
                     temp += tabop[i].Codop+ " " + tabop[i].tieneOperando+ " " + tabop[i].mDireccionamiento+ " "+tabop[i].codigoMaquina+"" + tabop[i].totalBytestCalculado+ " " + tabop[i].totalBytesPorCalcular+" "+ tabop[i].sumaTotalBytes+"\n";
                     
                 }
@@ -84,6 +110,79 @@ namespace HC12_Progsis_Compiler
             }
             return temp + aux ;
         }
+        bool analizarOperando(string operando, string modo) {
+            bool temp = false;
+
+            if (operando.Contains(","))
+            {
+                Console.WriteLine("El operando tiene coma.");
+            }
+            else {
+
+                
+                if (operando[0] == '#')
+                {
+                    Console.WriteLine("OPERANDO DE MODO IMM");
+                    temp = true;
+                }
+                else {
+                    if ((operando[0] == '$' || operando[0] == '%' || operando[0] == '@' || (operando[0] >= 48 && operando[0] <= 57)) && modo != "IMM")
+                    {
+                        int x = 0;
+                        switch (operando[0])
+                        {
+
+                            case '%':
+                                operando = operando.Substring(1, operando.Length - 1);
+                                x = BinarioEntero(operando);
+                                //Console.WriteLine("El numero binario " + x );
+
+                                break;
+                            case '@':
+                                operando = operando.Substring(1, operando.Length - 1);
+                                x = OctalEntero(operando);
+                                //Console.WriteLine("El numero ocal es: " + x);
+                                break;
+                            case '$':
+                                operando = operando.Substring(1, operando.Length - 1);
+                                x = HexaEntero(operando);
+                                //Console.WriteLine("El numero hexa es: " + x);
+                                break;
+                            default:
+                                x = Convert.ToInt32(operando);
+
+                                break;
+
+                        }
+                        Console.WriteLine(x);
+                        if (x <= 255 && modo == "DIR")
+                        {
+                            temp = true;
+                            Console.WriteLine("OPERANDO MODO DIRECTO");
+                        }
+                        else if (x >= 256 && x <= 65535 && modo == "EXT")
+                        {
+                            temp = true;
+                            Console.WriteLine("OPERANDO MODO EXTENDIDO");
+                        }
+
+
+                    }//Recordar hacer validaciones de la etiqueta.
+                    else if (modo == "REL")
+                    {
+                        temp = true;
+
+                    }
+                    else if (modo == "EXT") {
+                        temp = true;
+                    }
+                }
+            }
+            //Console.WriteLine(operando + " " + modo);
+            return temp;
+
+        }
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -103,7 +202,17 @@ namespace HC12_Progsis_Compiler
                 }
             }
         }
+        int BinarioEntero(string bin)
+        {
+            return Convert.ToInt32(bin, 2);
+        }
+        int OctalEntero(string octa) {
 
+            return Convert.ToInt32(octa, 8);
+        }
+        int HexaEntero(string hexa) {
+            return Convert.ToInt32(hexa,16);
+        }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.lineas = new List<Linea>();
@@ -117,9 +226,6 @@ namespace HC12_Progsis_Compiler
                 if (linea.Length > 0) {
                     aux = ana.analizar(linea);
                     this.lineas.Add(aux);
-                    /*if (linea.Contains("END") || linea.Contains("end") || linea.Contains("enD") || linea.Contains("EnD") || linea.Contains("ENd") || linea.Contains("eNd")){
-                        a = true;
-                    }*/
                 }
                 ana = new analizador();
             }       
@@ -189,11 +295,9 @@ namespace HC12_Progsis_Compiler
             if (this.lineas.Last().codop.ToUpper() != "END") {
                 salida.Text += "No se encontro End";
             }
-            /*if ((this.lineas.Last().codop != "end")&& (this.lineas.Last().codop != "END") && (this.lineas.Last().codop != "End") && (this.lineas.Last().codop != "ENd") && (this.lineas.Last().codop != "eND") ) {
-                salida.Text += "No se encontro End";
-            }*/
             control.SelectedIndex = 1;
 
         }
     }
+
 }
