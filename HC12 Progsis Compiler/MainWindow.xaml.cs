@@ -107,7 +107,7 @@ namespace HC12_Progsis_Compiler
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
+        {   
             Linea aux;
             String[] lineas = source.Text.Split('\n');
             salida.Text = "";
@@ -174,6 +174,7 @@ namespace HC12_Progsis_Compiler
             if ((this.lineas.Last().codop != "end")&& (this.lineas.Last().codop != "END") && (this.lineas.Last().codop != "End") && (this.lineas.Last().codop != "ENd") && (this.lineas.Last().codop != "eND") ) {
                 salida.Text += "No se encontro End";
             }
+            control.SelectedIndex = 1;
 
         }
     }

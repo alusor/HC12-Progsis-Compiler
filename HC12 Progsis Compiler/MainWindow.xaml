@@ -11,8 +11,8 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -24,15 +24,33 @@
         <Label  Padding="10" Content="Selecciona un archivo:" Grid.Row="0"></Label>
         <TextBox Padding="10" x:Name="name" Text="archivo.c" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" ></TextBox>
         <Button Content="Seleccionar..." Grid.Row="0"  Click="Button_Click" Grid.Column="3"></Button>
-        <Label Content="Codigo fuente" Grid.Row="1" Grid.Column="0"></Label>
-        <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
-            <TextBlock Background="Black" Foreground="Green" Padding="5" x:Name="source" Text=""  Width="auto" TextWrapping="Wrap" ></TextBlock>
-        </ScrollViewer>
-        <Button Height="35" Content="Compilar" Grid.Row="2" Grid.Column="3" Click="Button_Click_1"></Button>
-        <Label Content="Salida:" x:Name="errores" Grid.Row="3" Grid.Column="0"></Label>
+        <!--<Label Content="Codigo fuente" Grid.Row="1" Grid.Column="0"></Label>-->
+        
+        <Button Height="35" Content="Compilar" Grid.Row="4" Grid.Column="0" Click="Button_Click_1"></Button>
+        <TabControl x:Name="control" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="3">
+            <TabItem Header="Codigo Fuente">
+                <Grid>
+                    <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
+                        <TextBlock Background="Black" Foreground="Green" Padding="5" x:Name="source" Text=""  Width="auto" TextWrapping="Wrap" ></TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Consola">
+                <Grid>
+                    <ScrollViewer  Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="4">
+                        <TextBlock Text="" Padding="10px" x:Name="salida"  Background="#000" Foreground="White" Width="auto" TextWrapping="Wrap"></TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Compilación">
+                
+            </TabItem>
+        </TabControl>
+        <!--<Label Content="Salida:" x:Name="errores" ></Label>
         <ScrollViewer  Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="4">
             <TextBlock Text="0" x:Name="salida"  Width="auto" TextWrapping="Wrap"></TextBlock>
-        </ScrollViewer>
-        
-        </Grid>
+        </ScrollViewer>-->
+
+
+    </Grid>
 </Window>
