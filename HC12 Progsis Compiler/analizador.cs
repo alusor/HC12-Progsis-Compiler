@@ -87,32 +87,40 @@ namespace HC12_Progsis_Compiler
             return aux;
 
         }
+        public int analizarCodop(string cop) {
+
+            if (cop.Length > 5)
+                return -1;
+            rex = new Regex(@"^[A-Z,a-z][A-Z,a-z,\.]");
+            if (!rex.IsMatch(cop))
+                return 1;
+            else {
+                int numPuntos = cop.ToArray().Where(ir => ir.Equals('.')).Count();
+                if (numPuntos > 1)
+                {
+                    return 1;
+                }
+            }
+            foreach (Tabop l in tabop) {
+                if (l.Codop == cop.ToUpper())
+                    return 0;
+            }
+            return 2;
+        }
         private string codop(string cod) {
             string aux = cod.Trim().Split()[0];
-            if (aux.Length > 5)
-            {
-                linea.codop = "error";
-            }
-            else {
-                rex = new Regex(@"^[A-Z,a-z][A-Z,a-z,\.]");
-                if (!rex.IsMatch(aux))
-                {
-                    linea.codop = "error1";
-                }
-                else {
-                    int numPuntos = aux.ToArray().Where(ir => ir.Equals('.')).Count();
-                    if (numPuntos > 1) {
-                        linea.codop = "error1";
-                    }
-                    else
-                    {
-                        linea.codop = aux;
-                    }
-                }
-            }
+            int a = analizarCodop(aux);
 
-            // linea.codop = aux;
-            //Console.WriteLine(aux);
+            switch (a) {
+                case -1: linea.codop = "error";
+                    break;
+                case 0: linea.codop = aux;
+                    break;
+                case 1: linea.codop = "error1";
+                    break;
+                case 2: linea.codop = aux;
+                    break;
+            }
             return aux;
         }
         private void operando(string ope) {
