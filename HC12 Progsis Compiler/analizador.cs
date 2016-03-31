@@ -118,10 +118,19 @@ namespace HC12_Progsis_Compiler
                     break;
                 case 1: linea.codop = "error1";
                     break;
-                case 2: linea.codop = aux;
+                case 2:
+                    if (!(cod.ToUpper() == "END"))
+                        linea.codop = "error3";
+                    else
+                        linea.codop = aux;
                     break;
             }
             return aux;
+        }
+
+        public int analizarOperando(string op) {
+
+            return 0;
         }
         private void operando(string ope) {
             linea.operando = ope;

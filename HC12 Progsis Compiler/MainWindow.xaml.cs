@@ -299,8 +299,14 @@ namespace HC12_Progsis_Compiler
                                     //break;
                                 }
                                 else {
-                                    salida.Text += ("CODOP: " + i.codop + '\n');
-                                    string a = verificarCodop(i.codop, i.operando);
+                                    if (i.codop == "error3")
+                                        salida.Text += "Error: No se encuentra en el TABOP\n";
+                                    else {
+                                        salida.Text += ("CODOP: " + i.codop + '\n');
+                                        Console.WriteLine("1");
+                                    }
+                                    
+                                   string a = verificarCodop(i.codop, i.operando);
                                     if (a != "")
                                     {
                                         salida.Text += a;
