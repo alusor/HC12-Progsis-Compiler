@@ -110,7 +110,7 @@ namespace HC12_Progsis_Compiler
         private string codop(string cod) {
             string aux = cod.Trim().Split()[0];
             int a = analizarCodop(aux);
-            Console.WriteLine(aux);
+            //Console.WriteLine(aux);
             switch (a) {
                 case -1: linea.codop = "error";
                     break;
