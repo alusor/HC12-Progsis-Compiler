@@ -86,14 +86,19 @@ namespace HC12_Progsis_Compiler
                                                 aux = "Relativo 16 bits,  " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
                                             break;
                                         case "IDX":
+                                            aux = "Indizado de 5 bits " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
                                             break;
                                         case "IDX1":
+                                            aux = "Indizado de 9 bits " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
                                             break;
                                         case "IDX2":
+                                            aux = "Indizado de 16 bits " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
                                             break;
                                         case "[D,IDX]":
+                                            aux = "Indizado Indirecto de Acumulador “D” " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
                                             break;
                                         case "[IDX2]":
+                                            aux = "Indizado Indirecto de 16 bits " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
                                             break;
                                         default:
                                             break;
@@ -121,19 +126,19 @@ namespace HC12_Progsis_Compiler
             if (temp == "") {
                 return "No se encuentra en el TABOP\n";
             }
-            return /*temp +*/ aux ;
+            return temp + aux ;
         }
         bool analizarOperando(string operando, string modo) {
             bool temp = false;
             long op;
             string xp = "";
 
-            if (operando.Contains(","))
+            if (operando.Contains(",")&&modo!="IMM")
             {   if (operando[0] == '[') {
                     Console.WriteLine("Indirecto");
                     temp = true;
                 }
-                else {
+                else if(modo!="IMM"){
                     if ((operando.Split(',')[0][0] >= '0' && operando.Split(',')[0][0] <= '9')|| operando.Split(',')[0][0] == '-') {
                         op = long.Parse(operando.Split(',')[0]);
                         xp = operando.Split(',')[1];
@@ -152,7 +157,7 @@ namespace HC12_Progsis_Compiler
                 
                 if (operando[0] == '#')
                 {
-                    Console.WriteLine("OPERANDO DE MODO IMM");
+                    //Console.WriteLine("OPERANDO DE MODO IMM");
                     temp = true;
                 }
                 else {
