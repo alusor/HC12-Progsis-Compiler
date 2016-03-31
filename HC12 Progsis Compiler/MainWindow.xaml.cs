@@ -135,7 +135,7 @@ namespace HC12_Progsis_Compiler
 
             if (operando.Contains(",")&&modo!="IMM")
             {   if (operando[0] == '[') {
-                    Console.WriteLine("Indirecto");
+                    Console.WriteLine("Indirecto");   
                     temp = true;
                 }
                 else if(modo!="IMM"){
