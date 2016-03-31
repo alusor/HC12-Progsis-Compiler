@@ -12,5 +12,8 @@ namespace HC12_Progsis_Compiler
         public String etiqueta { get; set; }
         public String codop { get; set; }
         public String operando { get; set; }
+
+
+
     }
 }

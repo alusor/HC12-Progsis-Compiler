@@ -10,12 +10,44 @@ namespace HC12_Progsis_Compiler
     {
         Linea linea;
         Regex rex;
+        List<Tabop> tabop;
         
         public analizador() {
-            linea = new Linea();            
+            linea = new Linea();
+            tabop = new List<Tabop>();
+            cargarTabop();       
             
         }
-         private void comentario(string coment) {
+
+
+        public void cargarTabop()
+        {
+            System.IO.StreamReader tabop = new System.IO.StreamReader("TABOP.txt");
+            String[] temp = tabop.ReadToEnd().Split('\n');
+            foreach (String Linea in temp)
+            {
+
+                String[] aux = Linea.Split('|');
+                Tabop tmp = new Tabop();
+                tmp.Codop = aux[0];
+                if (aux[1] != "NO")
+                {
+                    tmp.tieneOperando = true;
+                }
+                else tmp.tieneOperando = false;
+                tmp.mDireccionamiento = aux[2];
+                tmp.codigoMaquina = aux[3];
+                tmp.totalBytestCalculado = int.Parse(aux[4]);
+                tmp.totalBytesPorCalcular = int.Parse(aux[5]);
+                tmp.sumaTotalBytes = int.Parse(aux[6]);
+                this.tabop.Add(tmp);
+            }
+        }
+
+
+
+
+        private void comentario(string coment) {
             string[] temp = coment.Split(';');
             //Console.WriteLine(temp[1]);
             for (int i = 1; i < temp.Length; i++) {
@@ -23,24 +55,35 @@ namespace HC12_Progsis_Compiler
             }
            // Console.WriteLine(linea.comentario);
         }
-        private string etiqueta(string eti) {
-            string aux = eti.Split()[0];
-            if (aux.Length > 8)
-            {
 
-                linea.etiqueta = "error";
-            }
+        public int analizarEtiqueta(string cadena) {
+
+            if (cadena.Length > 8)
+                return -1;
             else {
                 rex = new Regex(@"^[A-Z,a-z][A-Z,a-z,0-9,_]*");
-                if (!rex.IsMatch(aux))
-                {
-                    linea.etiqueta = "error1";
-                }
-                else {
-                    linea.etiqueta = aux;
-                }
+                if (!rex.IsMatch(cadena))
+                    return 1;
             }
+
+            return 0;
+        }
+        private string etiqueta(string eti) {
+            string aux = eti.Split()[0];
+            int a = analizarEtiqueta(aux);
             
+            switch (a) {
+                case 0:
+                    linea.etiqueta = aux;
+                    break;
+                case -1:
+                    linea.etiqueta = "error";
+                    break;
+                case 1:
+                    linea.etiqueta = "error1";
+                    break;
+
+            }
             return aux;
 
         }
