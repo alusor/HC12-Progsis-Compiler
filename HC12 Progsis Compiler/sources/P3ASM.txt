@@ -1,5 +1,6 @@
 	ORG	1	
 	SWI		
+	ADCA	3
 	ADCA	@3	
 	ADCA	%1111	
 ET1	ADCA	$3	

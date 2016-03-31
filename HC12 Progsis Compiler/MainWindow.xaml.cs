@@ -71,16 +71,29 @@ namespace HC12_Progsis_Compiler
                                 if (found) {
                                     switch (tabop[i].mDireccionamiento) {
                                         case "IMM":
-                                            aux = "Inmediato " + tabop[i].sumaTotalBytes.ToString() + " bytes + operando = " + operando + "\n";
+                                            aux = "Inmediato " + tabop[i].sumaTotalBytes.ToString() + " bytes \n";
                                             break;
                                         case "DIR":
-                                            aux = "Directo " + tabop[i].sumaTotalBytes.ToString() + " bytes+ operando = " + operando + "\n";
+                                            aux = "Directo " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
                                             break;
                                         case "EXT":
-                                            aux = "Extendido " + tabop[i].sumaTotalBytes.ToString() + " bytes+ operando = " + operando + "\n";
+                                            aux = "Extendido " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
                                             break;
                                         case "REL":
-                                            aux = "Relativo " + tabop[i].sumaTotalBytes.ToString() + " bytes+ operando = " + operando + "\n";
+                                            if(tabop[i].sumaTotalBytes<=3)
+                                                aux = "Relativo 8 bits,  " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
+                                            else
+                                                aux = "Relativo 16 bits,  " + tabop[i].sumaTotalBytes.ToString() + " bytes\n";
+                                            break;
+                                        case "IDX":
+                                            break;
+                                        case "IDX1":
+                                            break;
+                                        case "IDX2":
+                                            break;
+                                        case "[D,IDX]":
+                                            break;
+                                        case "[IDX2]":
                                             break;
                                         default:
                                             break;
@@ -108,14 +121,31 @@ namespace HC12_Progsis_Compiler
             if (temp == "") {
                 return "No se encuentra en el TABOP\n";
             }
-            return temp + aux ;
+            return /*temp +*/ aux ;
         }
         bool analizarOperando(string operando, string modo) {
             bool temp = false;
+            long op;
+            string xp = "";
 
             if (operando.Contains(","))
-            {
-                Console.WriteLine("El operando tiene coma.");
+            {   if (operando[0] == '[') {
+                    Console.WriteLine("Indirecto");
+                    temp = true;
+                }
+                else {
+                    if ((operando.Split(',')[0][0] >= '0' && operando.Split(',')[0][0] <= '9')|| operando.Split(',')[0][0] == '-') {
+                        op = long.Parse(operando.Split(',')[0]);
+                        xp = operando.Split(',')[1];
+                        Console.WriteLine("Directo");
+                        temp = true;
+                    }
+                    //Console.WriteLine("op: " + operando.Split(',')[0]);
+                    
+                }
+                
+               // Console.WriteLine(xp);
+               // Console.WriteLine("El operando tiene coma.");
             }
             else {
 
