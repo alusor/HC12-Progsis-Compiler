@@ -23,12 +23,14 @@ namespace HC12_Progsis_Compiler
         List<Tabop> tabop;
         List<Linea> lineas;
         analizador ana;
+
         //bool a = false;
         public MainWindow()
         {
             InitializeComponent();
             tabop = new List<Tabop>();
-            cargarTabop();  
+            cargarTabop();
+
         }
         public void cargarTabop() {
             System.IO.StreamReader tabop = new System.IO.StreamReader("TABOP.txt");
@@ -55,10 +57,10 @@ namespace HC12_Progsis_Compiler
         string verificarCodop(string codop, string operando) {
             string temp= "";
             string aux = "";
-            bool found =false;
+            int found =-1;
             for (int i = 0; i < tabop.Count; i++) {
                 if (codop.ToUpper() == tabop[i].Codop) {
-                    if(!found)
+                    if(found ==-1)
                         if (tabop[i].tieneOperando)
                         {
                             if (operando == null)
@@ -68,10 +70,11 @@ namespace HC12_Progsis_Compiler
                             else {
                             
                                found = analizarOperando(operando,tabop[i].mDireccionamiento);
-                                if (found)
+                                if (found!=-1)
                                 {
+                                    Console.WriteLine(found);
                                     switch (tabop[i].mDireccionamiento)
-                                    {
+                                    {   
                                         case "IMM":
                                             aux = "Inmediato " + tabop[i].sumaTotalBytes.ToString() + " bytes \n";
                                             break;
@@ -149,9 +152,9 @@ namespace HC12_Progsis_Compiler
 
             return false;
         }
-        bool analizarOperando(string operando, string modo) {
+        int analizarOperando(string operando, string modo) {
             bool temp = false;
-            long op;
+            int op = 0;
             string xp = "";
 
 
@@ -162,19 +165,27 @@ namespace HC12_Progsis_Compiler
                 switch (modo) {
                     case "IDX":
                         if (xp == "")
-                        {
-                            return true && verificarXYPCS(x);
+                        { if (verificarXYPCS(x))
+                                return 4;
+                            else
+                                return -1;
                         }
                         else {
-                            Console.WriteLine(xp);
-                            if(xp[0]!='['&& xp[0] != 'A' && xp[0] != 'B' && xp[0] != 'D' && xp[0] != 'a' && xp[0] != 'b' && xp[0] != 'd')
+                            //Console.WriteLine(xp);
+                            if (xp[0] != '[' && xp[0] != 'A' && xp[0] != 'B' && xp[0] != 'D' && xp[0] != 'a' && xp[0] != 'b' && xp[0] != 'd') {
                                 op = int.Parse(xp);
-                            
-                            return verificarXYPCS(operando.Split(',')[1]);
+                                Console.WriteLine(op);
+                            }
+                                else if (xp[0] == '[') {
+                                return 6;
+                            }
+                            else {
+                            }
+                            if (verificarXYPCS(operando.Split(',')[1]))
+                                return 4;
+                            else
+                                return -1;
                         }
-
-                       // Console.WriteLine(xp);
-                        //Console.WriteLine(operando.Split(',')[0]  + "    " + operando);
                         break;
                     case "IDX1":
                         break;
@@ -182,7 +193,7 @@ namespace HC12_Progsis_Compiler
                         break;
                     case "[IDX2]":
                         if (operando[0] == '[')
-                            return true;
+                            return 8;
                         break;
                     case "[D,IDX]":
                         break;
@@ -217,7 +228,7 @@ namespace HC12_Progsis_Compiler
                 if (operando[0] == '#')
                 {
                     //Console.WriteLine("OPERANDO DE MODO IMM");
-                    temp = true;
+                    return 1;
                 }
                 else {
                     if ((operando[0] == '$' || operando[0] == '%' || operando[0] == '@' || (operando[0] >= 48 && operando[0] <= 57)) && modo != "IMM")
@@ -251,12 +262,12 @@ namespace HC12_Progsis_Compiler
                        // Console.WriteLine(x);
                         if (x <= 255 && modo == "DIR")
                         {
-                            temp = true;
+                            return 2;
                            // Console.WriteLine("OPERANDO MODO DIRECTO");
                         }
                         else if (x >= 256 && x <= 65535 && modo == "EXT")
                         {
-                            temp = true;
+                            return 3;
                           //  Console.WriteLine("OPERANDO MODO EXTENDIDO");
                         }
 
@@ -264,16 +275,16 @@ namespace HC12_Progsis_Compiler
                     }//Recordar hacer validaciones de la etiqueta.
                     else if (modo == "REL")
                     {
-                        temp = true;
+                        return 11;
 
                     }
                     else if (modo == "EXT") {
-                        temp = true;
+                        return 1;
                     }
                 }
             }
             //Console.WriteLine(operando + " " + modo);
-            return temp;
+            return -1;
 
         }
         
@@ -315,7 +326,7 @@ namespace HC12_Progsis_Compiler
             salida.Text = "";
             Linea aux;
             String[] lineas = source.Text.Split('\n');
-            
+                
             foreach (string linea in lineas) {
                 if (linea.Length > 0) {
                     aux = ana.analizar(linea);
