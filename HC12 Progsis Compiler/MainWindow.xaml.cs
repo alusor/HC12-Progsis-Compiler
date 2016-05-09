@@ -326,7 +326,7 @@ namespace HC12_Progsis_Compiler
             salida.Text = "";
             Linea aux;
             String[] lineas = source.Text.Split('\n');
-                
+                        
             foreach (string linea in lineas) {
                 if (linea.Length > 0) {
                     aux = ana.analizar(linea);
